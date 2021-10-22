@@ -1,6 +1,8 @@
 call plug#begin('~/.config/nvim/plugged')
     Plug 'Shirk/vim-gas'
     Plug 'matze/vim-move'
+    Plug 'google/vim-maktaba'
+    Plug 'google/vim-codefmt'
     Plug 'romgrk/barbar.nvim'
     Plug 'tpope/vim-sensible'
     Plug 'yggdroot/indentline'
@@ -21,9 +23,12 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
-let g:indentLine_char_list                    = '|'
-let g:cursorhold_updatetime                   = 100
-let g:airline_powerline_fonts                 = 1
-let g:onedark_hide_endofbuffer                = 1
-" let g:airline#extensions#tabline#enabled      = 1
-" let g:airline#extensions#tabline#formatter    = 'unique_tail'
+let g:indentLine_char_list     = '|'
+let g:cursorhold_updatetime    = 100
+let g:airline_powerline_fonts  = 1
+let g:onedark_hide_endofbuffer = 1
+
+source ~/.config/nvim/plugins/coc.vim
+source ~/.config/nvim/plugins/fern.vim
+source ~/.config/nvim/plugins/floaterm.vim
+source ~/.config/nvim/plugins/neovim.vim

@@ -5,6 +5,10 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
+if ($TERM == "xterm-256color")
+    set lines=46 columns=169
+endif
+
 if !isdirectory($HOME."/.config/nvim")
     call mkdir($HOME."/.config/nvim", "", 0770)
 endif
@@ -31,6 +35,7 @@ function! BufferDelete()
     endif
 endfunction
 
+au BufRead,BufNewFile *.asm set ft=gas
 autocmd VimEnter,VimLeave * silent !tmux set status off
 
 set number
@@ -46,10 +51,9 @@ set softtabstop=4
 set encoding=UTF-8
 filetype plugin on
 colorscheme onedark
+" set lines=46 columns=180
 set clipboard=unnamedplus
 set undodir=~/.config/nvim/undo-dir
-
-au BufRead,BufNewFile *.asm set ft=gas
 
 cnoreabbrev W w
 cnoreabbrev Q q
