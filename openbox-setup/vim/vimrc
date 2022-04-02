@@ -1,0 +1,214 @@
+set runtimepath+=~/.config/vim,~/.config/vim/after,/usr/share/vim/vimfiles,/usr/share/vim/vim82,/usr/share/vim/vimfiles/after
+set viminfo+=n~/.config/vim/viminfo
+set directory=~/.config/vim/swap//,.,~/tmp,/var/tmp,/tmp
+set backupdir=~/.config/vim/backup//,.,~/tmp,~/
+set undodir=~/.config/vim/undo//,.
+
+" Autoinstall vim plug
+if empty(glob('~/.config/vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.config/vim/plugged')
+    Plug 'preservim/nerdtree' 
+    Plug 'psliwka/vim-smoothie'
+    Plug 'joshdick/onedark.vim'
+    Plug 'voldikss/vim-floaterm'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'vim-airline/vim-airline'
+    Plug 'lambdalisue/nerdfont.vim'
+    Plug 'junegunn/rainbow_parentheses.vim'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+let g:onedark_hide_endofbuffer = 1
+
+
+" ==================================================================================================== 
+"                                          Coc Configuration
+" ==================================================================================================== 
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <leader>rn <Plug>(coc-rename)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <c-@> coc#refresh()
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+endfunction
+
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+
+" ==================================================================================================== 
+"                                        Airline Configuration
+" ==================================================================================================== 
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#close_symbol = '×'
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+
+" ==================================================================================================== 
+"                                       Floaterm Configuration
+" ==================================================================================================== 
+
+nnoremap <silent> <F7>  :FloatermNew <CR>
+tnoremap <silent> <F7>  <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <F8>  :FloatermPrev<CR>
+tnoremap <silent> <F8>  <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <F9>  :FloatermNext<CR>
+tnoremap <silent> <F9>  <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <F12> :FloatermToggle<CR>
+tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
+
+let g:floaterm_wintype   = 'split'
+let g:floaterm_height    = 0.3
+let g:floaterm_position  = 'botright'
+let g:floaterm_autoclose = 2
+let g:floaterm_autohide  = 2
+
+
+" ==================================================================================================== 
+"                                       NERDTree Configuration
+" ==================================================================================================== 
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+            \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+let NERDTreeHighlightCursorline=0
+
+nmap <silent> <C-e> :NERDTreeToggle<CR>
+
+let g:NERDTreeMinimalUI = 1
+
+let NERDTreeCustomOpenArgs={'file':{'where': 't'}}
+
+
+" ==================================================================================================== 
+"                                   Rainbow Parentheses Configuration
+" ==================================================================================================== 
+
+augroup rainbow_lisp
+    autocmd!
+    autocmd FileType lisp,clojure,scheme RainbowParentheses
+augroup END
+
+
+" ==================================================================================================== 
+"                                          Vim Configuration
+" ==================================================================================================== 
+
+let &t_SI = "\e[6 q"
+let &t_SR = "\e[4 q"
+let &t_EI = "\e[2 q"
+
+if &term =~ '^screen'
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
+syntax on
+set gfn=FiraCode\ Nerd\ Font\ Medium\ 10
+set number
+set hidden
+set mouse=a
+set undofile
+set autochdir
+set expandtab
+set tabstop=4
+set noshowmode
+set ttymouse=sgr
+set shiftwidth=4
+set softtabstop=4
+set encoding=UTF-8
+set relativenumber
+filetype plugin on
+colorscheme onedark
+set clipboard=unnamedplus
+filetype indent plugin on
+autocmd FileType * set formatoptions-=cro
+
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev WQ wq
+cnoreabbrev Wq wq
+
+nmap <C-f> :/
+vnoremap <silent> <Tab> >
+nmap <silent> <C-s> :w<CR>
+vmap <silent> <C-s> :w<CR>
+nnoremap <silent> <Tab> :><CR>
+nnoremap <silent> <C-s> :w<CR>
+imap <silent> <C-r> <Esc><C-r>a
+imap <silent> <C-s> <Esc>:w<CR>a
+inoremap <silent> <C-s> <Esc>:w<CR>a
+
+function! BufferDelete()
+    if &modified
+        echohl ErrorMsg
+        echomsg "No write since last change. Not closing buffer."
+        echohl NONE
+    else
+        let s:total_nr_buffers = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+
+        if s:total_nr_buffers == 1
+            bdelete
+            q
+        else
+            bprevious
+            bdelete #
+            echo "Buffer deleted."
+        endif
+    endif
+endfunction
+
+nmap <silent> <C-w> :call BufferDelete()<CR>
+
+autocmd QuitPre * call <sid>TermForceCloseAll()
+function! s:TermForceCloseAll() abort
+    let term_bufs = filter(range(1, bufnr('$')), 'getbufvar(v:val, "&buftype") == "terminal"')
+    for t in term_bufs
+        execute "bd! " t
+    endfor
+endfunction

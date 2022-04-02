@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Set wallpaper
+hsetroot -cover /home/kostoskistefan/Pictures/Wallpapers/yeaYcEF.png &
+
+# Launch panel
+bash ~/.config/polybar/launch.sh &
+
+# Enable using the super key on its own
+ksuperkey &
+
+# Enable numlock
+numlockx &
+
+# Enable system clipboard
+parcellite &
+
+# Start notification manager
+dunst &
+
+# Enable compositor
+picom --experimental-backends &
+
+# Set keyboard layouts
+setxkbmap -layout "us,mk" -option "grp:alt_shift_toggle" &
+
+# Suspend on idle
+xidlehook --not-when-fullscreen --not-when-audio --timer 120 'light -S 10' 'light -S 100' --timer 600 'systemctl suspend' 'light -S 100' &
+
+# Power on bluetooth
+bluetoothctl power on &
+
+# Start hoverclock
+hoverclock &

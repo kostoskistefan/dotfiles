@@ -1,0 +1,37 @@
+* {
+    font: "FantasqueSansMono Nerd Font Bold 10";
+    vertical-align: 0.6;
+}
+
+prompt {
+    margin: 2px 0 0 118px;
+}
+
+entry { 
+    enabled: false; 
+} 
+
+listview {
+    columns: 1;
+    margin: 0;
+    padding: 0;
+}
+
+element {
+    padding: 5px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+}
+
+element-icon {
+    enabled: false;
+}
+
+window { 
+    location: south east; 
+    width: 25%;
+    height: 30%;
+    y-offset: -32px;
+}

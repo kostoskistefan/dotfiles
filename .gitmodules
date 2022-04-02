@@ -1,0 +1,3 @@
+[submodule "openbox-setup/polybar/scripts/polywins"]
+	path = openbox-setup/polybar/scripts/polywins
+	url = https://github.com/tam-carre/polywins
