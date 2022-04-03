@@ -13,6 +13,7 @@
  * obconf
  * parcellite
  * pcmanfm (and gvfs)
+ * [gsimplecal](https://github.com/dmedvinsky/gsimplecal)
  * ksuperkey
  * lxappearance
  * pulseaudio (or pipewire-pulse)
@@ -20,7 +21,7 @@
  * picom
  * light
  * qt5ct (or qt5ct-kde if using kde apps)
- * xidlehook-git
+ * [xidlehook-git](https://github.com/jD91mZM2/xidlehook)
  * dunst
  * Fantasque Sans Mono Font
  * Font Awesome
