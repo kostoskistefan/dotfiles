@@ -1,0 +1,33 @@
+#!/bin/bash
+# changeVolume
+
+# Arbitrary but unique message tag
+msgTag="changeVolume"
+
+
+function send_notification() {
+    sink=$(pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1)
+    volume=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+    muted=$(pactl list sinks | grep '^[[:space:]]Mute:' | sed -e 's/[[:space:]]Mute: //')
+
+    if [[ $volume == 0 || "$muted" == "yes" ]]; then
+        dunstify -a "changeVolume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$msgTag "Sound muted"
+    else 
+        dunstify -a "changeVolume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$msgTag \
+            -h int:value:"$volume" "Volume: ${volume}%"
+    fi
+}
+
+case $1 in 
+    up)
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
+        send_notification;;
+
+    down)
+        pactl set-sink-volume @DEFAULT_SINK@ -5%
+        send_notification;;
+
+    mute)
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
+        send_notification;;
+esac

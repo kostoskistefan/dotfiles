@@ -1,0 +1,23 @@
+#!/bin/bash
+# changeBrightness
+
+# Arbitrary but unique message tag
+msgTag="changeBrightness"
+
+
+function send_notification() {
+    brightness=$(light | grep -oE '^[0-9]+')
+    echo $brightness
+
+    dunstify -a "changeBrightness" -u low -i gpm-brightness-lcd -h string:x-dunst-stack-tag:$msgTag -h int:value:"$brightness" "Brightness: ${brightness}%"
+}
+
+case $1 in 
+    up)
+        light -A 5
+        send_notification;;
+
+    down)
+        light -U 5
+        send_notification;;
+esac

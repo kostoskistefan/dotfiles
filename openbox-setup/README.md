@@ -12,6 +12,7 @@
  * wmctrl
  * obconf
  * parcellite
+ * pcmanfm (and gvfs)
  * ksuperkey
  * lxappearance
  * pulseaudio (or pipewire-pulse)
