@@ -1,0 +1,9 @@
+# C Header Guard Using Filename
+
+snippet header_guard
+    #ifndef ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H
+    #define ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H
+
+
+
+    #endif // ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H
