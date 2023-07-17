@@ -33,10 +33,10 @@ DISABLE_MAGIC_FUNCTIONS=true
 
 source $ZSH/oh-my-zsh.sh
 
-alias ls='LC_COLLATE=C ls -lah --color --group-directories-first'
-alias pg='ps aux | grep -i '
-alias pacman='sudo pacman'
-alias yay='yay --nodiffmenu --nocleanmenu'
 alias vim='nvim'
-alias volume='amixer -c 1 -M -D pulse get Master | tail -1 | cut -d "[" -f2 | cut -d "]" -f1'
 alias make='make -j4'
+alias pacman='sudo pacman'
+alias pg='ps aux | grep -i '
+alias yay='yay --nodiffmenu --nocleanmenu'
+alias ls='LC_COLLATE=C ls -lah --color --group-directories-first'
+alias volume='amixer -c 1 -M -D pulse get Master | tail -1 | cut -d "[" -f2 | cut -d "]" -f1'

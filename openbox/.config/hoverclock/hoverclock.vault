@@ -1,0 +1,12 @@
+Position=3
+LineSpacing=5
+WindowPadding=6
+VerticalMargin=25
+HorizontalMargin=38
+BackgroundColor=0x00000000
+ForegroundColor=0xffffffff
+TextOutlineColor=0x000000ff
+TimeFont=DejaVu 10
+TimeFormat=%H:%M
+DateFont=DejaVu 8
+DateFormat=%a %d %b
